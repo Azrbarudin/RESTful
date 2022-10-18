@@ -17,14 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.azreen.restful.model.Employee;
 import com.azreen.restful.service.EmployeeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
-
+	
+	
 	@Autowired
 	private EmployeeService employeeService;
 	
 	//build create employee REST API
+	
+	@Operation(summary = "Insert an employee")
 	@PostMapping
 	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee){
 		
@@ -33,12 +38,14 @@ public class EmployeeController {
 	}
 	
 	//get all employee REST API
+	@Operation(summary = "Get all employees")
 	@GetMapping
 	public List<Employee> getAllEmployees(){
 		return employeeService.getAllEmployee();
 	}
 	
 	//get employee by ID
+	@Operation(summary = "Get employee info based on id")
 	@GetMapping("{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") long id){
 		return new ResponseEntity<Employee>(employeeService.getEmployeeById(id),HttpStatus.OK);
@@ -46,6 +53,7 @@ public class EmployeeController {
 	}
 	
 	//update employee by ID
+	@Operation(summary = "Update employee info based on id")
 	@PutMapping("{id}")
 	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee,@PathVariable("id") long id){
 		
@@ -53,6 +61,7 @@ public class EmployeeController {
 	}
 	
 	//delete employee by id
+	@Operation(summary = "Delete employee info based on id")
 	@DeleteMapping("{id}")
 	public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id){
 		
